@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'superadmin@mail.com'
         ]);
 
+        User::factory()->create([
+            'name' => 'Ribut',
+            'email' => 'rahayu@mail.com'
+        ]);
+
         Role::create([
             'name' => 'SuperAdmin',
             'key' => 'superadmin',
@@ -44,6 +49,11 @@ class DatabaseSeeder extends Seeder
         UserRole::create([
             'user_id' => 1,
             'role_id' => 1
+        ]);
+
+        UserRole::create([
+            'user_id' => 2,
+            'role_id' => 3 // is User role for login with api
         ]);
 
         $religion = [

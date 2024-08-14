@@ -48,6 +48,12 @@ class AuthRepositoryImplement extends Eloquent implements AuthRepository
         $auth = Auth::attempt($attempt);
         if (!$auth) return self::result(error: true, message: 'Invalid credentials');
 
+        // check if role has user role
+        $hasUserRole = Auth::user()->whereHas('roles', function ($query) {
+            $query->where('key', 'user');
+        })->exists();
+        if (!$hasUserRole) return self::result(error: true, message: 'You are not authorized to login');
+
         // check if already logged in two devices
         $countToken = Token::where('user_id', Auth::id())->where('revoked', 0)
             ->where('expires_at', '>', Carbon::now())->count();
