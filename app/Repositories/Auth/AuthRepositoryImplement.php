@@ -35,25 +35,6 @@ class AuthRepositoryImplement extends Eloquent implements AuthRepository
      */
     public function login(array $payload): array
     {
-        // set type for login
-        $type = 'login';
-
-        // check if payload has email and password
-        if (empty($payload['email']) || empty($payload['password'])) return self::result(error: true, message: 'Email and password are required');
-
-        $attempt = [
-            'email' => $payload['email'],
-            'password' => $payload['password']
-        ];
-        $auth = Auth::attempt($attempt);
-        if (!$auth) return self::result(error: true, message: 'Invalid credentials');
-
-        // check if role has user role
-        $hasUserRole = Auth::user()->whereHas('roles', function ($query) {
-            $query->where('key', 'user');
-        })->exists();
-        if (!$hasUserRole) return self::result(error: true, message: 'You are not authorized to login');
-
         // check if already logged in two devices
         $countToken = Token::where('user_id', Auth::id())->where('revoked', 0)
             ->where('expires_at', '>', Carbon::now())->count();
@@ -62,6 +43,8 @@ class AuthRepositoryImplement extends Eloquent implements AuthRepository
         $clientId = env('CLIENT_SECRET_ID', 2);
         $secretClient = $this->model->find($clientId)->secret;
 
+        // set type for login
+        $type = 'login';
         return $this->extracted($type, $clientId, $secretClient, $payload);
     }
 

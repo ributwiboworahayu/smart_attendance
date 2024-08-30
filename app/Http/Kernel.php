@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ProtectUserMobile;
 use Fahlisaputra\Minify\Middleware\MinifyCss;
 use Fahlisaputra\Minify\Middleware\MinifyHtml;
 use Fahlisaputra\Minify\Middleware\MinifyJavascript;
@@ -24,12 +25,6 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        // Middleware to minify CSS
-        MinifyCss::class,
-        // Middleware to minify Javascript
-        MinifyJavascript::class,
-        // Middleware to minify Blade
-        MinifyHtml::class,
     ];
 
     /**
@@ -45,6 +40,14 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // Middleware to minify CSS
+            MinifyCss::class,
+            // Middleware to minify Javascript
+            MinifyJavascript::class,
+            // Middleware to minify Blade
+            MinifyHtml::class,
+            // Middleware to protect user mobile access to web
+            ProtectUserMobile::class,
         ],
 
         'api' => [
