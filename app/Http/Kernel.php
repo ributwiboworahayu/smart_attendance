@@ -2,6 +2,9 @@
 
 namespace App\Http;
 
+use Fahlisaputra\Minify\Middleware\MinifyCss;
+use Fahlisaputra\Minify\Middleware\MinifyHtml;
+use Fahlisaputra\Minify\Middleware\MinifyJavascript;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -21,6 +24,12 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        // Middleware to minify CSS
+        MinifyCss::class,
+        // Middleware to minify Javascript
+        MinifyJavascript::class,
+        // Middleware to minify Blade
+        MinifyHtml::class,
     ];
 
     /**
@@ -40,7 +49,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];

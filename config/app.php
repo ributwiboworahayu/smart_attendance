@@ -55,7 +55,12 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL_DYNAMIC', false) ?
+        (
+            (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || ($_SERVER['SERVER_PORT'] ?? 80) == 443 ? 'https://' : 'http://') .
+            ($_SERVER['HTTP_HOST'] ?? env('APP_URL', 'http://localhost')) . '/'
+        )
+        : env('APP_URL', 'http://localhost/'),
 
     'asset_url' => env('ASSET_URL'),
 
@@ -109,7 +114,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'id_ID',
 
     /*
     |--------------------------------------------------------------------------

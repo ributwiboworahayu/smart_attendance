@@ -8,6 +8,7 @@ trait ApiResponser
 {
     /**
      * @param mixed $data
+     * @param string $message
      * @param int $code
      * @return JsonResponse
      */
@@ -30,7 +31,8 @@ trait ApiResponser
     {
         return response()->json([
             'status' => 'fail',
-            'error' => self::httpCodeName($code),
+            'error_code' => $code,
+            'error_msg' => self::httpCodeName($code),
             'data' => $data,
             'message' => $message
         ], $code);
@@ -121,6 +123,6 @@ trait ApiResponser
             511 => 'Network Authentication Required',
         ];
 
-        return $httpCode[$code];
+        return $httpCode[$code] ?? 'Unknown';
     }
 }

@@ -6,6 +6,7 @@ trait ServiceResponser
 {
     /**
      * @param mixed $data
+     * @param string $message
      * @return array
      */
     protected function finalResultSuccess(mixed $data = [], string $message = 'success'): array

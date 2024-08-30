@@ -11,7 +11,11 @@ class FormRequestResponse extends FormRequest
 {
     use ApiResponser;
 
-    protected function failedValidation(Validator $validator)
+    /**
+     * @param Validator $validator
+     * @return mixed
+     */
+    protected function failedValidation(Validator $validator): mixed
     {
         $response = $this->failResponse(
             data: $validator->errors(),
