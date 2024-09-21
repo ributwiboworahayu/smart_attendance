@@ -32,12 +32,15 @@ Route::middleware('auth')->group(function () {
     Route::prefix('superadmin')->group(function () {
         Route::get('/', [SuperAdminController::class, 'index'])->name('superadmin');
         Route::get('users-admins', [SuperAdminController::class, 'adminUsers'])->name('admin.users');
-        Route::get('units', [SuperAdminController::class, 'units'])->name('units');
+        Route::prefix('units')->group(function () {
+            Route::get('/', [SuperAdminController::class, 'units'])->name('superadmin.units');
+            Route::post('/', [SuperAdminController::class, 'storeUnit'])->name('superadmin.units.store');
+        });
         Route::get('roles', [SuperAdminController::class, 'roles'])->name('roles');
 
         Route::prefix('datatables')->group(function () {
             Route::get('admin-users', [SuperAdminController::class, 'adminUsersDatatables'])->name('admin.users.datatables');
-            Route::get('units', [SuperAdminController::class, 'unitsDatatables'])->name('units.datatables');
+            Route::get('units', [SuperAdminController::class, 'unitDatatables'])->name('superadmin.units.datatables');
             Route::get('roles', [SuperAdminController::class, 'rolesDatatables'])->name('roles.datatables');
         });
     });

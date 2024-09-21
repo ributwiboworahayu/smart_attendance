@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,6 +26,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        $hasAdminRole = User::where('email', $request->input('email'))->whereHas('roles', function ($query) {
+            $query->whereIn('key', ['admin', 'superadmin']);
+        })->exists();
+        if (!$hasAdminRole) return redirect()->back()->withErrors(['email' => 'You are not authorized to login']);
+
         $request->authenticate();
 
         $request->session()->regenerate();

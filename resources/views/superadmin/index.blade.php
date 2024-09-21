@@ -16,7 +16,7 @@
                         <div class="row">
                             <!-- Admin Unit -->
                             <div class="col-md-4 mb-3">
-                                <a href="{{ route('units') }}" class="text-decoration-none">
+                                <a href="{{ route('superadmin.units') }}" class="text-decoration-none">
                                     <div class="d-flex align-items-center p-3 border rounded bg-light menu-item">
                                         <i class="bi bi-box-seam fs-3 me-3"></i>
                                         <div>

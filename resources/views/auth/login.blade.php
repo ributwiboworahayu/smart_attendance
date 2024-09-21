@@ -68,7 +68,7 @@
 
 @section('content')
     <div class="login-container">
-        <div class="login-form">
+        <div class="login-form pt-4">
             <h2 class="mb-4 text-center">{{ __('Login') }}</h2>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
@@ -102,9 +102,9 @@
             </form>
         </div>
 
-        <div class="login-info">
-            <h1 class="h3">Waste Management System</h1>
-            <img src="https://dhillonmedicalcentre.com/wp-content/uploads/2023/10/cropped-Dhillon-Medical-Centre.png"
+        <div class="login-info pt-4">
+            <h1 class="h3">{{ config('app.name') }}</h1>
+            <img src="{{ asset('assets/img/logo.png') }}"
                  alt="Logo" class="img-thumbnail">
             <p class="mt-3">© {{ now()->year }} Waste Management System. All rights reserved.</p>
         </div>
